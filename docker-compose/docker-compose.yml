@@ -1,0 +1,23 @@
+version: "3"
+networks:
+    app_network :
+services:
+    reverse_proxy:
+      image: nginx:1.18.0 
+      
+      ports:
+          - 80:80
+      restart: always
+      networks:
+        app_network :
+      volumes:
+        - ./ngninx.conf:/etc/nginx/nginx.conf    
+    nginx:
+      depends_on:
+          - reverseproxy
+      image: nginx:nginx:1.18.0 
+      ports:
+          - 8080:8080
+      restart: always
+ 
+#docker-compose up -d

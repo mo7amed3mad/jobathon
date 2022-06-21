@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+    - name: install nginx
+      apt: name=nginx state=latest
+
+    - name: Copy the nginx configuration file
+      copy:
+        src: /project/application.conf 
+        dest: /etc/nginx/sites-enabled/application.conf 
+
+    - name: •	Extract the project files 
+      unarchive:
+        src: /project/www.tar.gz 
+        dest: /var/www/html 
+   
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
